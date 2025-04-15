@@ -40,18 +40,29 @@ app.all('/jira/*', async (req, res) => {
       headers: {
         ...basicAuthHeader,
         'Content-Type': 'application/json',
+         'User-Agent': 'curl/7.88.1', // Mimic what worked in your curl test
       },
-      params: req.query,
+       params: req.query,
       data: req.body,
     });
 
     res.status(response.status).json(response.data);
   } catch (error) {
-    console.error(`[Jira Proxy Error]`, error.response?.status, error.response?.data?.errorMessages || error.message);
-    res.status(error.response?.status || 500).json({
-      error: error.response?.data || error.message,
-    });
-  }
+      const status = error.response?.status || 500;
+      const data = error.response?.data || {};
+      const headers = error.response?.headers || {};
+    
+      console.error('[Jira Proxy Error]', {
+        status,
+        data,
+        headers,
+      });
+    
+      res.status(status).json({
+        error: data,
+      });
+}
+
 });
 
 // Start server on DigitalOcean-provided port or 3000 locally
