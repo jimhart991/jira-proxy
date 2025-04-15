@@ -22,7 +22,7 @@ app.all('/jira/*', async (req, res) => {
   try {
     const response = await axios({
       method: req.method,
-      url: `${JIRA_BASE_URL}${jiraPath}`,
+      url: `${JIRA_BASE_URL.replace(/\/$/, '')}${jiraPath}`,
       headers: {
         ...authHeader,
         'Content-Type': 'application/json',
