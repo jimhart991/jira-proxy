@@ -30,6 +30,10 @@ app.all('/jira/*', async (req, res) => {
   console.log(`➡️  Proxying to: ${fullUrl}`);
 
   try {
+    console.log('📤 Outgoing headers:', {
+      Authorization: basicAuthHeader.Authorization.slice(0, 30) + '...',
+      'Content-Type': 'application/json',
+    });
     const response = await axios({
       method: req.method,
       url: fullUrl,
