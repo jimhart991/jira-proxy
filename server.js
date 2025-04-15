@@ -40,7 +40,7 @@ app.all('/jira/*', async (req, res) => {
       headers: {
         ...basicAuthHeader,
         'Content-Type': 'application/json',
-         'User-Agent': 'curl/7.88.1', // Mimic what worked in your curl test
+         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36',
       },
        params: req.query,
       data: req.body,
